@@ -23,9 +23,9 @@ README = open(os.path.join(here, "README.rst")).read()
 version = open(os.path.join(here, "VERSION.txt")).readline().rstrip()
 
 setup(
-    name="django-wsgi",
+    name="django-wsgi2",
     version=version,
-    description="Enhanced WSGI support for Django applications",
+    description="Enhanced WSGI support (for Django 3.0)",
     long_description=README,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -41,15 +41,15 @@ setup(
         "Topic :: Security",
     ],
     keywords="django wsgi webob web",
-    author="2degrees Limited",
-    author_email="2degrees-floss@googlegroups.com",
-    url="https://pythonhosted.org/django-wsgi/",
+    author="Fernando Morales",
+    author_email="fmoralesalcaide@protonmail.com",
+    url="https://https://github.com/fmoralesalcaide/django-wsgi",
     license="BSD (http://dev.2degreesnetwork.com/p/2degrees-license.html)",
     packages=find_packages(exclude=["tests"]),
     zip_safe=False,
     tests_require=["coverage", "nose"],
     install_requires=[
-        "Django >= 1.1",
+        "django >= 3.0",
         "WebOb >= 1.5",
         "six==1.10.0",
         "setuptools",
