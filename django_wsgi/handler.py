@@ -16,6 +16,8 @@
 Django request/response handling a la WSGI.
 
 """
+
+import django
 from django.core.handlers.wsgi import WSGIHandler as DjangoWSGIHandler
 from django.core.handlers.wsgi import WSGIRequest as DjangoRequest
 from webob import Request as WebobRequest
@@ -33,7 +35,7 @@ class DjangoWSGIRequest(DjangoRequest):
 
         :class:`webob.Request` instance for the WSGI environment behind the
         current Django request.
-    
+
     """
 
     def __init__(self, environ):
@@ -56,11 +58,13 @@ class DjangoWSGIRequest(DjangoRequest):
 class DjangoApplication(DjangoWSGIHandler):
     """
     Django request handler which uses our enhanced WSGI request class.
-    
+
     """
 
     request_class = DjangoWSGIRequest
 
 
-APPLICATION = DjangoApplication()
-"""WSGI application based on :class:`DjangoApplication`."""
+def get_wsgi_application():
+    """WSGI application based on :class:`DjangoApplication`."""
+    django.setup(set_prefix=False)
+    return DjangoApplication()

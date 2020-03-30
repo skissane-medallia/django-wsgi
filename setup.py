@@ -43,7 +43,7 @@ setup(
     keywords="django wsgi webob web",
     author="Fernando Morales",
     author_email="fmoralesalcaide@protonmail.com",
-    url="https://https://github.com/fmoralesalcaide/django-wsgi",
+    url="https://github.com/fmoralesalcaide/django-wsgi",
     license="BSD (http://dev.2degreesnetwork.com/p/2degrees-license.html)",
     packages=find_packages(exclude=["tests"]),
     zip_safe=False,
