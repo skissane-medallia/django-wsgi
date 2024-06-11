@@ -25,7 +25,7 @@ version = open(os.path.join(here, "VERSION.txt")).readline().rstrip()
 setup(
     name="django-wsgi2",
     version=version,
-    description="Enhanced WSGI support (for Django 3.0)",
+    description="Enhanced WSGI support (for Django 3.x)",
     long_description=README,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -35,7 +35,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI",
         "Topic :: Security",
@@ -47,11 +47,11 @@ setup(
     license="BSD (http://dev.2degreesnetwork.com/p/2degrees-license.html)",
     packages=find_packages(exclude=["tests"]),
     zip_safe=False,
-    tests_require=["coverage", "nose"],
+    tests_require=["coverage", "pynose"],
     install_requires=[
-        "django >= 3.0",
+        "django >= 3.0, < 4",
         "WebOb >= 1.5",
-        "six==1.10.0",
+        "six==1.16.0",
         "setuptools",
     ],
     test_suite="nose.collector",

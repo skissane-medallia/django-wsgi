@@ -133,4 +133,23 @@ def complete_environ(**environ):
     full_environ.update(environ)
     return full_environ
 
+
+def get_response_headers(response):
+    """
+    Get headers from DjangoResponse.
+    Handles the incompatibility between Django 3.0.x/3.1.x and Django 3.2.x.
+    In 3.0.x/3.1.x, headers are available in _headers attribute, whereas in Django 3.2.x it is called headers instead
+    Plus in 3.0.x/3.1.x the dictionary values are tuples of (header name original case, header value).
+    Whereas in 3.2.x the dictionary value is just the header value.
+    In 3.0.x/3.1.x it is a standard case-sensitive dictionary, and the key is the lower-case header name.
+    In 3.2.x it is a case-insensitive dictionary.
+    """
+    if hasattr(response, 'headers'):
+        mapped_headers = {}
+        for header_name, header_value in response.headers.items():
+            mapped_headers[header_name.lower()] = (header_name, header_value)
+        return mapped_headers
+    # noinspection PyProtectedMember
+    return response._headers
+
 #}

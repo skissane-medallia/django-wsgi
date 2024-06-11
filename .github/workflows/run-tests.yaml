@@ -1,0 +1,33 @@
+name: run-tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: '${{ matrix.os }}'
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        python-version:
+          - '3.12'
+          - '3.11'
+          - '3.10'
+          - '3.9'
+          - '3.8'
+          - 'pypy3.9'
+          - 'pypy3.10'
+    steps:
+      - name: 'Set up Python ${{ matrix.python-version }}'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python-version }}'
+      - uses: actions/checkout@v4
+      - run: pip install .
+      - run: pip install -r tests/requirements.txt
+      - run: coverage run --source=django_wsgi setup.py test
+#     - run: coveralls

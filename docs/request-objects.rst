@@ -42,7 +42,7 @@ WebOb's accessors in your code. For example::
 This request class will be used instead of the built-in one when you configure
 Django to use our "handler" in your ``settings.py``::
 
-    WSGI_APPLICATION = 'django_wsgi.handler.APPLICATION'
+    WSGI_APPLICATION = 'django_wsgi.handler.get_wsgi_application()'
 
 See the `documentation for webob.Request
 <http://docs.webob.org/en/latest/reference.html#request>`_ to learn more about

@@ -11,7 +11,7 @@ API documentation for :mod:`django_wsgi`
     :show-inheritance:
 
 
-.. autodata:: django_wsgi.handler.APPLICATION
+.. autofunction:: django_wsgi.handler.get_wsgi_application
 
 
 Embedded applications

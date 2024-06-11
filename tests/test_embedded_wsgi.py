@@ -24,7 +24,7 @@ from django_wsgi.handler import DjangoWSGIRequest
 from django_wsgi.exc import ApplicationCallError
 
 from tests import (BaseDjangoTestCase, MockApp, MockClosingApp, MockWriteApp,
-                   MockGeneratorApp, complete_environ)
+                   MockGeneratorApp, complete_environ, get_response_headers)
 
 
 class TestCallWSGIApp(BaseDjangoTestCase):
@@ -37,8 +37,8 @@ class TestCallWSGIApp(BaseDjangoTestCase):
         """The original environ must have not been modified."""
         original_environ = \
             complete_environ(SCRIPT_NAME="/blog", PATH_INFO="/admin/models")
-        expected_environ = original_environ.copy()
         request = _make_request(**original_environ)
+        expected_environ = request.environ.copy()
         # Running the app:
         app = MockApp("200 OK", [])
         call_wsgi_app(app, request, "/models")
@@ -117,7 +117,7 @@ class TestCallWSGIApp(BaseDjangoTestCase):
         # Running the app:
         app = MockApp("200 OK", headers)
         django_response = call_wsgi_app(app, request, "/wiki")
-        eq_(expected_headers, django_response._headers)
+        eq_(expected_headers, get_response_headers(django_response))
 
     def test_authenticated_user(self):
         environ = complete_environ(SCRIPT_NAME="/dev", PATH_INFO="/trac/wiki")
@@ -228,9 +228,9 @@ class TestCallWSGIApp(BaseDjangoTestCase):
         request = _make_request(**environ)
         django_response = call_wsgi_app(app, request, "/posts")
         # Checking the .close() call:
-        assert_false(app.app_iter.closed)
+        assert_false(django_response.closed)
         django_response.close()
-        ok_(app.app_iter.closed)
+        ok_(django_response.closed)
 
 
 class TestWSGIView(BaseDjangoTestCase):
@@ -255,7 +255,7 @@ class TestWSGIView(BaseDjangoTestCase):
         # Checking the response:
         django_response = django_view(request, "/foo/bar")
         eq_(django_response.status_code, 206)
-        eq_(("X-SALUTATION", "Hey"), django_response._headers['x-salutation'])
+        eq_(("X-SALUTATION", "Hey"), get_response_headers(django_response)['x-salutation'])
         eq_(app.environ['PATH_INFO'], "/foo/bar")
         eq_(app.environ['SCRIPT_NAME'], "/dev/app1/wsgi-view")
 

@@ -23,7 +23,7 @@ from six.moves.urllib.parse import urlencode
 from webob import Request
 
 from tests import BaseDjangoTestCase, complete_environ
-from django_wsgi.handler import APPLICATION
+from django_wsgi.handler import get_wsgi_application
 from django_wsgi.handler import DjangoApplication
 from django_wsgi.handler import DjangoWSGIRequest
 
@@ -102,7 +102,7 @@ class TestWSGIHandler(BaseDjangoTestCase):
 
 
 def test_handler_instance():
-    assert_is_instance(APPLICATION, DjangoApplication)
+    assert_is_instance(get_wsgi_application(), DjangoApplication)
 
 
 class _UnseekableFile(object):
